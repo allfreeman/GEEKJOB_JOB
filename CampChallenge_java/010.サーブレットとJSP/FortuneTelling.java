@@ -14,6 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Random;
 
+import java.util.Date;
+import javax.servlet.RequestDispatcher;
+import org.camp.servlet.ResultData;
 
 /**
  *
@@ -41,10 +44,21 @@ public class FortuneTelling extends HttpServlet {
             Random rand = new Random();
             //乱数所得
             Integer index = rand.nextInt(luckList.length);
+            out.print(luckList[index]);
+            final String result="/WEB-INF/jsp/FortuneTellingResult.jsp";
+            
+            //リクエストスコープに結果を設定
+            ResultData data = new ResultData();
+            data.setD(new Date());
+            data.setLuck(luckList[index]);
+            request.setAttribute("DATA", data);
+
+            RequestDispatcher rd = request.getRequestDispatcher(result);
+            rd.forward(request, response);
             
             
             /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
+            /*out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
             out.println("<title>Servlet FortuneTelling</title>");            
@@ -52,7 +66,7 @@ public class FortuneTelling extends HttpServlet {
             out.println("<body>");
             out.println("<h1>あなたの運勢は・・・？" + luckList[index]+ "</h1>");
             out.println("</body>");
-            out.println("</html>");
+            out.println("</html>");*/
         }
     }
 
